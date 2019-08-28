@@ -26,12 +26,6 @@ app.get('/api/user',(req,res) => {
     res.send(users);
 });
 
-app.get('/api/user/:id',(req,res) => {
-    // let id = req.params.id;
-    let u = users.find(data => data.id === parseInt(req.params.id));
-    if(!u) {return res.status(403).send('invalid id')}
-    res.send(u);
-});
 
 app.post('/api/user/newuser', (req,res) => {
     let newData = {
@@ -60,6 +54,5 @@ app.delete('/api/user/removeuser/:id' ,(req,res) => {
 })
 
 
-app.listen(4000,() => {
-    console.log('server working on port number 4000');
-});
+// console.log(name);
+// console.log(password);
