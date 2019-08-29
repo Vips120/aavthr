@@ -1,58 +1,38 @@
 const express = require('express');
+const config = require('config');
+// const Joi = require('@hapi/joi');
 // console.log(express);
 const app = express();
+let morgan = require('morgan');
+let midmen = require('./middleware/firstmiddleware');
 app.use(express.json());
-  let users = [{
-      id:1,
-      name:'asrar bhai'
-  },
- {
-     id:2,
-     name:'adil bhai'
- },
- {
-     id:3,
-     name:'Teja bhai'
- },
- {
-     id:4,
-     name:'vishal dada'
- }
-];
+app.use(express.urlencoded({extended:true}));
+let user = require('./routes/users');
+let port = process.env.Port || 4000;
+app.use(midmen);
+if(config.get('host.mail') === 'development mode'){
+    app.use(morgan('tiny'))
+}
 
+console.log(`production mode: ${process.env.Node_Env}`);
+console.log(`development mode : ${app.set('env')}`);
 
-app.get('/api/user',(req,res) => {
-    // res.send('hello user');
-    res.send(users);
+console.log(`name : ${config.get('name')}`);
+console.log(` mail : ${config.get('host.mail')}`);
+console.log(`password: ${config.get('Password')}`)
+
+app.use('/api/user', user);
+app.listen(port,() => {
+    console.log(`server working on port number  ${port}`);
 });
 
 
-app.post('/api/user/newuser', (req,res) => {
-    let newData = {
-        id:users.length + 1,
-        name:req.body.name
-    };
-    users.push(newData);
-    res.send({message:'created new user data',
-       data:users
-})
-});
+// let userdetails = {
+//     name: 'vipul',
+//     password:'vs@123'
+// };
 
-app.put('/api/user/updateuser/:id' ,(req,res) => {
-    let u = users.find(data => data.id === parseInt(req.params.id));
-    if(!u) {return res.status(403).send('invalid id')}
-    u.name = req.body.name;
-    res.send(u);
-});
-
-app.delete('/api/user/removeuser/:id' ,(req,res) => {
-    let u = users.find(data => data.id === parseInt(req.params.id));
-    if(!u) {return res.status(403).send('invalid id')};
-    let index = users.indexOf(u);
-    let removeid = users.splice(index,1);
-    res.send('rip the user id! see you next time :(');
-})
-
+// let {name,password} = userdetails;
 
 // console.log(name);
 // console.log(password);
