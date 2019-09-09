@@ -25,9 +25,11 @@ async function StoreUserData(){
 }
  async function GetAllUserDetails(){
      let data = await User
-                     .find({'price': {
-                         $in:[10,30,40]
-                     }})
+                    //  .find({'price': {
+                    //      $in:[10,30,40]
+                    //  }})
+                    .find()
+                    // .and([{price:10}, {username:'vipul'}])
                      .sort('username')
                      .select(['username', 'isPublished', 'price'])
                      ;
