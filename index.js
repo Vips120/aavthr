@@ -10,6 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 let user = require('./routes/users');
 let registration = require('./routes/user.register.routes');
+let genre = require('./routes/genre.routes');
+let movie = require('./routes/movie.routes');
+let auth = require('./auth/auth');
 let port = process.env.Port || 4000;
 app.use(midmen);
 if(config.get('host.mail') === 'development mode'){
@@ -29,6 +32,9 @@ mongoose.connect('mongodb://localhost/aavdemo',{useNewUrlParser:true})
 
 app.use('/api/user', user);
 app.use('/api/customer', registration);
+app.use('/api/genre', genre);
+app.use('/api/movie',movie);
+app.use('/api/auth', auth);
 app.listen(port,() => {
     console.log(`server working on port number  ${port}`);
 });
