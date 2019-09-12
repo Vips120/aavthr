@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 let U = require('../mongo/users');
-
+let jwt = require('jsonwebtoken');
 
 router.post('/newuser', async(req,res) => {
     let {error} = U.ValidationError(req.body);
@@ -19,7 +19,10 @@ router.post('/newuser', async(req,res) => {
     let salt = await bcrypt.genSalt(10);
     data.UserLogin.password = await bcrypt.hash(data.UserLogin.password, salt);
     let items = await data.save();
-    res.send({message:'registration succesful', data:items})
+    //information expert principle
+let token = items.UserValidToken();
+    // console.log(token);
+    res.header('x-auth-token', token).send({message:'registration succesful', data:items, token: token})
 
 });
 
