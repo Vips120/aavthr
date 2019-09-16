@@ -3,6 +3,19 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 let U = require('../mongo/users');
 let jwt = require('jsonwebtoken');
+let auth = require('../middleware/auth');
+let Admin = require('../middleware/admin');
+//LoggedIn user
+
+router.get('/me', auth, async(req,res) => {
+    let data = await U.User
+                      .findById(req.users._id)
+                      .select("-UserLogin.password")
+                      ;
+    res.send(data);
+} )
+
+
 
 router.post('/newuser', async(req,res) => {
     let {error} = U.ValidationError(req.body);
@@ -25,5 +38,10 @@ let token = items.UserValidToken();
     res.header('x-auth-token', token).send({message:'registration succesful', data:items, token: token})
 
 });
+
+router.delete('/:id', [auth,Admin],async(req,res) => {
+    let user = await U.User.findByIdAndRemove(req.params.id);
+      res.send('romoved the user');
+})
 
 module.exports = router;

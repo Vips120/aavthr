@@ -9,10 +9,11 @@ let userSchema = new mongoose.Schema({
     UserLogin:{
         email:{type:String,required:true,unique:true},
         password:{type:String,required:true}
-    }
+    },
+    isAdmin:{type:Boolean}
 });
 userSchema.methods.UserValidToken = function () {
-  let token = jwt.sign({_id: this._id},config.get('usertoken'));
+  let token = jwt.sign({_id: this._id, isAdmin:this.isAdmin},config.get('usertoken'));
   return token;
 };
 
