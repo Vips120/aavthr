@@ -42,6 +42,26 @@ let token = items.UserValidToken();
 router.delete('/:id', [auth,Admin],async(req,res) => {
     let user = await U.User.findByIdAndRemove(req.params.id);
       res.send('romoved the user');
+});
+
+//pagination
+
+router.post('/:id', async(req,res) => {
+    let perPage = 10;
+    let page = req.params.id || 1;
+    let pageData = await U.User
+                           .find({})
+                            .skip((perPage * page) - perPage)
+                             .limit(perPage);
+    let dataCount = await U.User.find({}).count();
+    let pageSize = Math.ceil(dataCount/perPage);
+    res.send({
+        perPage: perPage,
+        currentPage:page,
+        dataLimit: pageData,
+        dataCount: dataCount,
+        pageSize: pageSize
+    });
 })
 
 module.exports = router;
