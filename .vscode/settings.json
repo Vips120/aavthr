@@ -1,0 +1,22 @@
+{
+    "peacock.favoriteColors": [
+        { "name": "Gatsby Purple", "value": "#639" },
+        { "name": "Auth0 Orange", "value": "#eb5424" },
+        { "name": "Azure Blue", "value": "#007fff" },
+        { "name": "codwithvipul", "value": "#e53838" }    ],
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#eb6565",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#56e956",
+        "activityBarBadge.foreground": "#15202b",
+        "titleBar.activeBackground": "#e53838",
+        "titleBar.inactiveBackground": "#e5383899",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "statusBar.background": "#e53838",
+        "statusBarItem.hoverBackground": "#eb6565",
+        "statusBar.foreground": "#e7e7e7"
+    },
+    "peacock.color": "#e53838"
+}
